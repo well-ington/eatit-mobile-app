@@ -34,7 +34,7 @@ const App = () => {
       {/* <StatusBar barStyle="dark-content" /> */}
       <SafeAreaView>
         <View>
-          
+          <Text>Hello there </Text>
         </View>
       </SafeAreaView>
     </>
