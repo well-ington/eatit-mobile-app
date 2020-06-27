@@ -5,12 +5,12 @@
 // import 'react-native';
 // import React from
 import React from 'react';
-import App from '../src/App';
+import Home from '../../src/views/Home';
 import {shallow} from 'enzyme';
 
-describe('App', () => {
+describe('Home', () => {
   it('renders correctly', () => {
-    const wrapped = shallow(<App />);
+    const wrapped = shallow(<Home />);
     expect(wrapped.length).toEqual(1);
   });
 });
