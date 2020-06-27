@@ -21,25 +21,30 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import AppBar from './components/AppBar';
 import Home from './views/Home';
-import { Login } from './views/Login';
+import { LoginPrompt } from './views/LoginPrompt';
+import { LoginForm } from './views/LoginForm';
+import { RegisterForm } from './views/RegisterForm';
+import { GuestForm } from './views/GuestForm';
 
 // declare const global: {HermesInternal: null | {}};
 
 const App = () => {
   return (<>
-    {/* <View><Button title='aha' onPress={() => Actions.home()}></Button></View> */}
-    <Router>
+      <Router>
               <Stack hideNavBar key='root'>
-                <Scene key='login' component={Login} />
+                <Scene key='loginprompt' component={LoginPrompt} />
+                <Scene key='login' component={LoginForm} />
+                <Scene key='register' component={RegisterForm} />
+                <Scene key='guest' component={GuestForm} />
                 <Scene key='home' component={Home} />
               </Stack>
       </Router>
   </>
   );
 };
-const styles = StyleSheet.create({
+// const styles = StyleSheet.create({
 
-});
+// });
 
 // const styles = StyleSheet.create({
 //   scrollView: {
