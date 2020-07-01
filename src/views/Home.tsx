@@ -14,6 +14,7 @@ const TitleText = styled.Text`
 
 interface IHome {
     nav: number;
+    places: any;
 }
 const ModalityText = styled.Text`
     font-size: 22px;
@@ -27,7 +28,7 @@ const ModalityContainer = styled.View`
     padding: 5px;
 `;
 
-const Home: React.FC<IHome> = ({nav}) => {
+const Home: React.FC<IHome> = ({nav, places}) => {
     const [modality, setModality] = React.useState(0);
     return <>
     <HomeContainer>

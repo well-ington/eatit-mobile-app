@@ -11,16 +11,17 @@ import { RegisterForm } from './views/RegisterForm';
 import { GuestForm } from './views/GuestForm';
 import BottomBar from './components/util/BottomBar';
 import { connect } from 'react-redux';
-import { TinitialState } from './store/reducer/main';
+import { TinitialState, Tstore } from './store/reducer/main';
 import { Text } from 'react-native';
 
 // declare const global: {HermesInternal: null | {}};
 
 interface IApp {
   user: any;
+  places: any;
 }
 
-const App: React.FC<IApp> = ({user}) => {
+const App: React.FC<IApp> = ({user, places}) => {
   const [homeNav, setHomeNav] = React.useState(0);
   return (<>
       <Router>
@@ -32,7 +33,7 @@ const App: React.FC<IApp> = ({user}) => {
                   <Scene key='register' component={RegisterForm} />
                   <Scene key='guest' component={GuestForm} />
                 </> :
-                  <Scene key='home' component={() => <Home nav={homeNav} />} />
+                  <Scene key='home' component={() => <Home nav={homeNav} places={places} />} />
                 }
               </Stack>
       </Router>
@@ -41,22 +42,12 @@ const App: React.FC<IApp> = ({user}) => {
   </>
   );
 };
-// const styles = StyleSheet.create({
 
-// });
-
-// const styles = StyleSheet.create({
-//   scrollView: {
-//     backgroundColor: Colors.lighter,
-//   },
-//   firstText: {
-//     textAlign: 'center'
-//   }
-// });
-const mapStateToProps = (state: TinitialState) => {
+const mapStateToProps = (state: Tstore) => {
   const t = state;
   return {
-    user: t
+    user: t.main,
+    places: t.places
   }
 }
 

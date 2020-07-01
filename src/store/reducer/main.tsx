@@ -1,12 +1,18 @@
-import { createStore, Reducer, applyMiddleware } from "redux";
+import { createStore, Reducer, applyMiddleware, combineReducers } from "redux";
 import thunk from 'redux-thunk';
 import { TACTIONS, ACTIONS } from "../actions/main";
+import { places, TplacesInitialState } from "./places";
 
 export type TinitialState = {
     auth: number;
         name: string;
         email: string;
         phone: string;  
+}
+
+export type Tstore = {
+    main: TinitialState,
+    places: TplacesInitialState
 }
 
 const initialState = {
@@ -34,4 +40,4 @@ const main: Reducer<TinitialState, TACTIONS> = (state = initialState, action) =>
     }
 }
 
-export default createStore(main, applyMiddleware(thunk));
+export default createStore(combineReducers({main, places}), applyMiddleware(thunk));
