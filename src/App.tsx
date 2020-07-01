@@ -1,44 +1,43 @@
 
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Button,
-} from 'react-native';
 
-import {Router, Stack, Scene, Actions} from 'react-native-router-flux';
+import {Router, Stack, Scene } from 'react-native-router-flux';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import AppBar from './components/AppBar';
+
 import Home from './views/Home';
 import { LoginPrompt } from './views/LoginPrompt';
-import { LoginForm } from './views/LoginForm';
+import LoginForm from './views/LoginForm';
 import { RegisterForm } from './views/RegisterForm';
 import { GuestForm } from './views/GuestForm';
+import BottomBar from './components/util/BottomBar';
+import { connect } from 'react-redux';
+import { TinitialState } from './store/reducer/main';
+import { Text } from 'react-native';
 
 // declare const global: {HermesInternal: null | {}};
 
-const App = () => {
+interface IApp {
+  user: any;
+}
+
+const App: React.FC<IApp> = ({user}) => {
+  const [homeNav, setHomeNav] = React.useState(0);
   return (<>
       <Router>
               <Stack hideNavBar key='root'>
-                <Scene key='loginprompt' component={LoginPrompt} />
-                <Scene key='login' component={LoginForm} />
-                <Scene key='register' component={RegisterForm} />
-                <Scene key='guest' component={GuestForm} />
-                <Scene key='home' component={Home} />
+                {
+                  user.auth === -1 ? <>
+                  <Scene key='loginprompt' component={LoginPrompt} />
+                  <Scene key='login' component={LoginForm} />
+                  <Scene key='register' component={RegisterForm} />
+                  <Scene key='guest' component={GuestForm} />
+                </> :
+                  <Scene key='home' component={() => <Home nav={homeNav} />} />
+                }
               </Stack>
       </Router>
+      {/* <Text>{user.auth}</Text> */}
+      {user.auth !== -1 && <BottomBar selectedNav={homeNav} changeNav={(nextNav: number) => setHomeNav(nextNav)} />}
   </>
   );
 };
@@ -54,5 +53,11 @@ const App = () => {
 //     textAlign: 'center'
 //   }
 // });
+const mapStateToProps = (state: TinitialState) => {
+  const t = state;
+  return {
+    user: t
+  }
+}
 
-export default App;
+export default connect(mapStateToProps)(App);

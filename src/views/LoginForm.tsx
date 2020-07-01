@@ -3,7 +3,9 @@ import styled from 'styled-components/native';
 import { Text, Image, TouchableHighlight } from 'react-native';
 import { ButtonGen } from '../components/util/ButtonGen';
 import { InputTextGen } from '../components/util/InputTextGen';
-// import { Actions } from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { doLogin } from '../store/actions/main';
 
 const Container = styled.View`
     height: 100%;
@@ -24,23 +26,54 @@ const MediumImage = styled.ImageBackground`
     width: 150px;
 `;
 
-export const LoginForm = () => {
+interface ILoginForm {
+    login: (type: string, userInfo?: any) => void;
+}
+
+
+const LoginForm: React.FC<ILoginForm> = ({login}) => {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [loginType, setLoginType] = React.useState('');
+    
+
+    const selectedForm = loginType === 'email' ? <>
+    <MediumImage source={{uri: 'https://picsum.photos/150'}} />
+    <Text>email</Text>
+    <InputTextGen autoFocus onChange={(text: any) => setEmail(email + text)} />
+    
+    <Text>password</Text>
+    <InputTextGen onChange={(text: any) => setPassword(password + text)} />
+
+
+    <ButtonGen title='Enter' onPress={() => {
+        login('guest');
+        // Actions.home();
+        }} type='primary' />
+    <ButtonGen title='Forgot my password' onPress={() => console.log('ahoy')} type='text' />
+    </>
+    : loginType === 'phone' ? <>
+    <MediumImage source={{uri: 'https://picsum.photos/150'}} />
+    <Text>your phone</Text>
+    <InputTextGen autoFocus onChange={(text: any) => setEmail(email + text)} />
+    </> : <>
+                    <Text>How do you wanna login?</Text>
+                    <ButtonGen type='secondary' title='email' onPress={() => setLoginType('email')} />
+                    <ButtonGen type='secondary' title='phone' onPress={() => setLoginType('phone')} />
+    </>;
 
     return <Container>        
-        <FormContainer>
-            <MediumImage source={{uri: 'https://picsum.photos/150'}} />
-            <Text>email</Text>
-            <InputTextGen autoFocus onChange={(text: any) => setEmail(email + text)} />
-            
-            <Text>password</Text>
-            <InputTextGen onChange={(text: any) => setPassword(password + text)} />
+    <FormContainer>
+    {selectedForm}
+    </FormContainer>
 
-
-            <ButtonGen title='Enter' onPress={() => console.log('ahoy')} type='primary' />
-            <ButtonGen title='Forgot my password' onPress={() => console.log('ahoy')} type='text' />
-        </FormContainer>
-
-    </Container>
+</Container>
 }
+
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        login: (type: string, userInfo?: any) => dispatch(doLogin(type))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(LoginForm);
