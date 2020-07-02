@@ -27,12 +27,12 @@ const App: React.FC<IApp> = ({user, places}) => {
       <Router>
               <Stack hideNavBar key='root'>
                 {
-                  user.auth === -1 ? <>
+                  user.auth === -1 ? <Stack hideNavBar>
                   <Scene key='loginprompt' component={LoginPrompt} />
                   <Scene key='login' component={LoginForm} />
                   <Scene key='register' component={RegisterForm} />
                   <Scene key='guest' component={GuestForm} />
-                </> :
+                </Stack> :
                   <Scene key='home' component={() => <Home nav={homeNav} places={places} />} />
                 }
               </Stack>

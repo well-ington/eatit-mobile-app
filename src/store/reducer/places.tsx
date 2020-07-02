@@ -23,7 +23,7 @@ export type TplacesInitialState = {
 }
 
 
-const fullCategories = [...'pizza,burger,italian,thai,chinese,japonese,brazilian,martian'.split(',')]
+const fullCategories = [...'pizza,burger,italian,thai,chinese,japanese,brazilian,martian,french,mexican'.split(',')]
 
 const randomFromArray = (array: any[]) => {
     return array[~~(Math.random() * array.length)]
@@ -33,8 +33,9 @@ const randomFromArray = (array: any[]) => {
 const randomGen = (type: string) => {
     switch (type) {
         case 'name':
-            const nameArray: string[] = [...'Loko,Burger,Potato,Batata,Zeca,Malu,Big,Bug,Pig,Pollo,Frito,Refritos,Fried,Chicken,Frango'.split(',')];
-            return `${randomFromArray(nameArray)} ${randomFromArray(nameArray)} ${Math.random() > 0.7 && randomFromArray(nameArray)}`;
+            const nameArray: string[] = [...'Loko,Burger,Potato,Batata,Big,Pig,Prince,Princess,Akito,Pollo,Frito,Refritos,Fried,Chicken,Frango,Rango,Cheese,Du Chef,Carne,Boi,Meat,Bacon,Cream,Chefe,Chapeiro,Baker,Maker,Pie,Toasted'.split(',')];
+            const secNameArray: string[] = [...'Bleuer,Muvner,Karvek,Silva,Milos,Nat,Fast,Lest,Point,Byte,Lite,Night,Light'.split(',')];
+            return `${randomFromArray(nameArray)} ${randomFromArray(secNameArray)}${Math.random() > 0.7 ? ' ' + randomFromArray(nameArray) : ''}`;
         case 'categories':
             const catNumber = (Math.random() * 4) + 1;
             let array = [];
@@ -107,17 +108,18 @@ const generateRestaurants = (placesToGenerate: number) => {
             menu: [randomGen('menu')]
         });
     }
-    return {...placesArray};
+    return [...placesArray];
 }
 
 
-const placesGenerated: any = [generateRestaurants(50)];
+const placesGenerated: any = [generateRestaurants(40)];
 
 
 const initialState: TplacesInitialState = {
     categories: fullCategories,
-    places: placesGenerated
+    places: placesGenerated[0]
 }
+console.log(initialState.places[0].menu[0].items);
 
 export const places: Reducer<TplacesInitialState, any> = (state = initialState, action) => {
     return state;
