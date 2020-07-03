@@ -5,6 +5,9 @@ type Tplaces = {
     phone: string;
     categories: string[];
     open: boolean;
+    rating: number;
+    deliveryFee: number;
+    time: number;
     hours: string[];
     menu: {
         section: string;
@@ -14,7 +17,7 @@ type Tplaces = {
             description: string;
             prices: string[]
         };
-    }[];        
+    }[];
 }[];
 
 export type TplacesInitialState = {
@@ -42,7 +45,7 @@ const randomGen = (type: string) => {
             for (let i = 0; i < catNumber; i++) {
                 array.push(randomFromArray(fullCategories))
             }
-            return {...array};
+            return [...array];
         case 'hours':
             let hoursArray = [];
             let vacationDays = ~~(Math.random() * 3);
@@ -57,7 +60,7 @@ const randomGen = (type: string) => {
                     hoursArray.push(`${hourBase}:00 PM - ${hourBase + 4}:55 PM`);
                 }
             }
-            return {...hoursArray};
+            return [...hoursArray];
         case 'menu':
             const menuArray = [];
             const priceRange = ~~(Math.random() * 3);
@@ -89,7 +92,7 @@ const randomGen = (type: string) => {
                     items: itemArray
                 })
             }
-            return {...menuArray};
+            return [...menuArray];
 
         default:
             return null;
@@ -102,24 +105,27 @@ const generateRestaurants = (placesToGenerate: number) => {
         placesArray.push({
             name: randomGen('name'),
             phone: 'xxx-xxx-xxx',
-            categories: [randomGen('categories')],
+            categories: randomGen('categories'),
             open: Math.random() > 0.3,
-            hours: [randomGen('hours')],
-            menu: [randomGen('menu')]
+            deliveryFee: Math.random() > 0.05 ? ~~(Math.random() * 10) + 2 : 0,
+            time: Math.random() > 0.5 ? Math.random() > 0.5 ? '30-50 min' : '40-60 min' : '20-90 min',
+            rating: (Math.random() > 0.05 ? ((Math.random() * 3) + 2) : (Math.random() * 3)),
+            hours: randomGen('hours'),
+            menu: randomGen('menu')
         });
     }
     return [...placesArray];
 }
 
 
-const placesGenerated: any = [generateRestaurants(40)];
+const placesGenerated: any = generateRestaurants(40);
 
 
 const initialState: TplacesInitialState = {
     categories: fullCategories,
-    places: placesGenerated[0]
+    places: placesGenerated
 }
-console.log(initialState.places[0].menu[0].items);
+// console.log(initialState.places[0].menu[0].items);
 
 export const places: Reducer<TplacesInitialState, any> = (state = initialState, action) => {
     return state;

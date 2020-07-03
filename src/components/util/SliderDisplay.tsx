@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
-import { places } from 'src/store/reducer/places';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
+import RestaurantCard from './RestaurantCard';
+import CategoryCard from './CategoryCard';
 
 const Container = styled.ScrollView`
     /* height: 200px; */
@@ -24,12 +25,13 @@ const CategoriesView = styled.View`
 
 const RestView = styled.View`
     /* height: 200px; */
+    padding: 16px;
 `;
 
 const CategoryContainer = styled.View`
     height: 125px;
     width: 200px;
-    background-color: green;
+    /* background-color: green; */
     border-width: 4px;
     border-color: limegreen;
 `;
@@ -37,7 +39,7 @@ const CategoryContainer = styled.View`
 // const RestaurantContainer = styled.View``;
 
 const CategoryText = styled.Text`
-    color: white;
+    /* color: white; */
     font-size: 26px;
     text-align: center;
     width: 100%;
@@ -53,42 +55,36 @@ interface ISliderDisplay {
 
 
 
-const SliderDisplay: React.FC<ISliderDisplay> = ({type, info, vertical = false}) => {
-    switch(type){
+const SliderDisplay: React.FC<ISliderDisplay> = ({ type, info, vertical = false }) => {
+    switch (type) {
         case 'categories':
             const categories = [...info];
             return <Container horizontal={!vertical}>
                 {
-                    categories.map((name: string) => <CategoryContainer key={name}>
-                        <CategoryText>{name}</CategoryText>
-                    </CategoryContainer>)
+                    categories.map((name: string) => <CategoryCard category={name} />)
                 }
             </Container>
         case 'restaurants--list':
             const restaurants = [...info];
             return <Container>
-            <RestView style={styles.restaurantsContainer} >
-                {
-                    restaurants.map((place: {name: string}, index: number) => <CategoryContainer style={styles.restaurantItem} key={place.name + index}>
-                        <CategoryText>{place.name}</CategoryText>
-                    </CategoryContainer>)
-                }
-            </RestView>
+                <RestView style={styles.restaurantsContainer} >
+                    {
+                        restaurants.map((place: any, index: number) => <RestaurantCard key={place.name + index} place={place} />)
+                    }
+                </RestView>
             </Container>
 
         case 'categories--list':
             const categlist = [...info];
             return <>
-            <TitleContainer>
-                <TitleText>Categories</TitleText>
-            </TitleContainer>
-            <CategoriesView style={styles.categorySearch}>
-                {
-                    categlist.map((name: string) => <CategoryContainer key={name}>
-                        <CategoryText>{name}</CategoryText>
-                    </CategoryContainer>)
-                }
-            </CategoriesView>
+                <TitleContainer>
+                    <TitleText>Categories</TitleText>
+                </TitleContainer>
+                <CategoriesView style={styles.categorySearch}>
+                    {
+                        categlist.map((name: string) => <CategoryCard category={name} />)
+                    }
+                </CategoriesView>
             </>
         default:
             return null;
@@ -101,7 +97,7 @@ const styles = StyleSheet.create({
     },
     restaurantItem: {
         width: '100%',
-        backgroundColor: 'blue'
+        // backgroundColor: 'blue'
     },
     categorySearch: {
         // width: '100%',

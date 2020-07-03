@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-
+import {Actions} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { Keyboard, StyleSheet } from 'react-native';
 
@@ -8,7 +8,6 @@ const BarContainer = styled.View`
     background-color: #eee;
     height: 10%;    
     display: flex;
-    /* flex: 1; */
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;

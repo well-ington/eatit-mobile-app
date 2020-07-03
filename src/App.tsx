@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import {Router, Stack, Scene } from 'react-native-router-flux';
+import {Router, Stack, Scene, Actions } from 'react-native-router-flux';
 
 
 import Home from './views/Home';
@@ -22,7 +22,7 @@ interface IApp {
 }
 
 const App: React.FC<IApp> = ({user, places}) => {
-  const [homeNav, setHomeNav] = React.useState(0);
+  const [selectedNav, setSelectedNav] = React.useState(0);
   return (<>
       <Router>
               <Stack hideNavBar key='root'>
@@ -33,12 +33,12 @@ const App: React.FC<IApp> = ({user, places}) => {
                   <Scene key='register' component={RegisterForm} />
                   <Scene key='guest' component={GuestForm} />
                 </Stack> :
-                  <Scene key='home' component={() => <Home nav={homeNav} places={places} />} />
+                  <Scene key='home' component={(params: any) => <Home selectedNav={selectedNav} places={places} params={params} />} />
                 }
               </Stack>
       </Router>
       {/* <Text>{user.auth}</Text> */}
-      {user.auth !== -1 && <BottomBar selectedNav={homeNav} changeNav={(nextNav: number) => setHomeNav(nextNav)} />}
+      {user.auth !== -1 && <BottomBar selectedNav={selectedNav} changeNav={(nextNav: number) => setSelectedNav(nextNav)} />}
   </>
   );
 };

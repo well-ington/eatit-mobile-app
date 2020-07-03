@@ -48,7 +48,7 @@ const LoginForm: React.FC<ILoginForm> = ({login}) => {
 
     <ButtonGen title='Enter' onPress={() => {
         login('guest');
-        // Actions.home();
+        // Actions.home({id: 0});
         }} type='primary' />
     <ButtonGen title='Forgot my password' onPress={() => console.log('ahoy')} type='text' />
     </>
