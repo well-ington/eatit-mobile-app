@@ -2,13 +2,14 @@ import React from 'react';
 
 import styled from 'styled-components/native';
 import { View, TouchableHighlight } from 'react-native';
+import OrderCard from '../../components/util/OrderCard';
 
 interface IHomeOrder {
 
 }
 
 const Container = styled.ScrollView`
-
+    background-color: #efdddd;
 `;
 
 const HeaderContainer = styled.View`
@@ -52,7 +53,7 @@ const HomeOrder: React.FC<IHomeOrder> = () => {
             </SubContainer>
         </HeaderContainer>
         <Container>
-
+            <OrderCard />
         </Container>
     </>
 }

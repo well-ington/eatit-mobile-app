@@ -20,12 +20,12 @@ interface IButtonGen {
     type: string;
 }
 
-const types = ['primary','secondary','text'];
+const types = ['primary','secondary','text','text--red'];
 
 export const ButtonGen: React.FC<IButtonGen> = ({title, onPress, type}) => {
     const colorIndex = types.indexOf(type);
     return <TouchableHighlight style={styles.container} onPress={onPress}>
-        <StyledText style={[styles.primary, styles.secondary, styles.text][colorIndex] || styles.primary}>
+        <StyledText style={[styles.primary, styles.secondary, styles.text, styles.textColor][colorIndex] || styles.primary}>
             {title}
         </StyledText>
     </TouchableHighlight>
@@ -43,6 +43,11 @@ const styles = StyleSheet.create({
     },
     text: {
         color: 'dimgray',
+        fontSize: 18,
+        borderColor: 'transparent'
+    },
+    textColor: {
+        color: 'crimson',
         fontSize: 18,
         borderColor: 'transparent'
     },

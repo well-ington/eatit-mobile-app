@@ -36,7 +36,7 @@ const OptionCards: React.FC<IOptionCards> = ({info, type}) => {
     return <CardContainer>
         {info.map((e: {name: string, icon: string, description?: string}) => {
 
-            return <CardElement>
+            return <CardElement key={e.name + e.icon}>
             <Icon name={e.icon} color={'black'} size={32} />
             <TextContainer>
                 <TextElement style={type === 'primary' ? styles.primary : styles.secondary}>

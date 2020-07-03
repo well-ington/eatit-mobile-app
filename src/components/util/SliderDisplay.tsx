@@ -61,7 +61,7 @@ const SliderDisplay: React.FC<ISliderDisplay> = ({ type, info, vertical = false 
             const categories = [...info];
             return <Container horizontal={!vertical}>
                 {
-                    categories.map((name: string) => <CategoryCard category={name} />)
+                    categories.map((name: string, index: number) => <CategoryCard key={index + name} category={name} />)
                 }
             </Container>
         case 'restaurants--list':
@@ -82,7 +82,7 @@ const SliderDisplay: React.FC<ISliderDisplay> = ({ type, info, vertical = false 
                 </TitleContainer>
                 <CategoriesView style={styles.categorySearch}>
                     {
-                        categlist.map((name: string) => <CategoryCard category={name} />)
+                        categlist.map((name: string, index: number) => <CategoryCard category={name} key={name + index} />)
                     }
                 </CategoriesView>
             </>
