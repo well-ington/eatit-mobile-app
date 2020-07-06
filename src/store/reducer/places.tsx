@@ -3,20 +3,23 @@ import { Reducer } from "redux"
 type Tplaces = {
     name: string;
     phone: string;
+    id: number;
     categories: string[];
     open: boolean;
     rating: number;
     deliveryFee: number;
     time: number;
     hours: string[];
+    promo: [number,number][];
     menu: {
         section: string;
-        description: string;
+        description: string;        
         items: {
             name: string;
             description: string;
-            prices: string[]
-        };
+            prices: number[];
+            promo: number;
+        }[];
     }[];
 }[];
 
@@ -63,6 +66,7 @@ const randomGen = (type: string) => {
             return [...hoursArray];
         case 'menu':
             const menuArray = [];
+            const promoArray: [number,number][] = [];
             const priceRange = ~~(Math.random() * 3);
             const sectionNames: string[] = [...'Florg,Bvrger,Drinks,Flembs,Blerbarg,Somfi,Viner'.split(',')];
             const sectionDesc: string[] = [...'Daren norb,Dinco oell,Puring ducksun,Abenic auversen,Vindac oiseau,Vandec avine'.split(',')];
@@ -76,14 +80,20 @@ const randomGen = (type: string) => {
                 const sectionOptions = ~~(Math.random() * 3) + 1;
                 for (let o = 0; o < itemQuantity; o++) {
                     const pricesArray = [];
+                    const hasPromo = Math.random() < 0.15 ? ((Math.random() * 25) + 5)/100 : 0;                    
                     const basePrice = (Math.random() * (priceRange * 2.5)) + (priceRange * 1.5);
+
                     for (let k = 0; k < sectionOptions; k++) {
                         pricesArray.push(basePrice + (basePrice * k * priceRange * 0.075));
                     }
+
+                    if (hasPromo) { promoArray.push([i,o]) }
+
                     itemArray.push({
                         name: randomFromArray(itemName),
                         description: `${randomFromArray(descriptionStarter)} ${randomFromArray(descriptionBody)}.`,
-                        prices: pricesArray
+                        prices: pricesArray,
+                        promo: hasPromo
                     });
                 }
                 menuArray.push({
@@ -92,7 +102,7 @@ const randomGen = (type: string) => {
                     items: itemArray
                 })
             }
-            return [...menuArray];
+            return [[...menuArray], [...promoArray]];
 
         default:
             return null;
@@ -102,16 +112,19 @@ const randomGen = (type: string) => {
 const generateRestaurants = (placesToGenerate: number) => {
     const placesArray = [];
     for (let i = 0; i < placesToGenerate; i++) {
+        const [menuGenerated, promoMap]: any = randomGen('menu');
         placesArray.push({
             name: randomGen('name'),
             phone: 'xxx-xxx-xxx',
+            id: i,
             categories: randomGen('categories'),
             open: Math.random() > 0.3,
             deliveryFee: Math.random() > 0.05 ? ~~(Math.random() * 10) + 2 : 0,
             time: Math.random() > 0.5 ? Math.random() > 0.5 ? '30-50 min' : '40-60 min' : '20-90 min',
             rating: (Math.random() > 0.05 ? ((Math.random() * 3) + 2) : (Math.random() * 3)),
             hours: randomGen('hours'),
-            menu: randomGen('menu')
+            menu: menuGenerated,
+            promo: promoMap
         });
     }
     return [...placesArray];

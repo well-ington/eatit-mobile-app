@@ -1,7 +1,9 @@
 import React from 'react';
 
 import styled from 'styled-components/native';
+import { TouchableHighlight } from 'react-native';
 import OptionCards from '../../components/util/OptionCards';
+import { Actions } from 'react-native-router-flux';
 
 const UserContainer = styled.View`
     flex-direction: row;
@@ -12,7 +14,6 @@ const UserContainer = styled.View`
 
 const HomeContainer = styled.ScrollView`
     background-color: #fff;
-    /* height: 90%; */
 `;
 
 const UserImage = styled.View`
@@ -24,18 +25,23 @@ const UserImage = styled.View`
 
 const UserTextContainer = styled.View`
     margin-left: 32px;
+    margin-right: 16px;
+    /* padding-right: 16px; */
 `;
 
 const UserText = styled.Text`
-    font-size: 32px;
+    font-size: 26px;
 `;
 
 const UserSubText = styled.Text`
     font-size: 16px;
 `;
 
+interface IHomeUser {
+    userInfo: any;
+}
 
-const HomeUser: React.FC = () => {
+const HomeUser: React.FC<IHomeUser> = ({userInfo}) => {
 
     const [sections] = React.useState(() => {
         const firstComments: string[] = [...'My notifications hub,Wallet balance,My promo codes,Favorite places,My payment methods,My addresses,My donations'.split(',')]
@@ -53,13 +59,15 @@ const HomeUser: React.FC = () => {
         return { firstOptionsArray, secondOptionsArray }
     });
     return <>
+        <TouchableHighlight onPress={() => Actions.userEdit()}>
         <UserContainer>
             <UserImage />
             <UserTextContainer>
-                <UserText>User Name</UserText>
+            <UserText>{userInfo.name}</UserText>
                 <UserSubText>Edit profile</UserSubText>
             </UserTextContainer>
         </UserContainer>
+        </TouchableHighlight>
         <HomeContainer>
             <OptionCards info={sections.firstOptionsArray} type='primary' />
             <OptionCards info={sections.secondOptionsArray} type='secondary' />

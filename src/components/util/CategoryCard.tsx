@@ -10,7 +10,7 @@ const CardContainer = styled.View`
 const ImagePlaceholder = styled.View`
     width: 150px;
     height: 100px;
-    background-color: blue;
+    background-color: crimson;
 `;
 
 const CategoryText = styled.Text`

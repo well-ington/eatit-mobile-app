@@ -13,32 +13,36 @@ import BottomBar from './components/util/BottomBar';
 import { connect } from 'react-redux';
 import { TinitialState, Tstore } from './store/reducer/main';
 import { Text } from 'react-native';
+import UserEdit from './views/UserEdit';
 
 // declare const global: {HermesInternal: null | {}};
 
 interface IApp {
-  user: any;
+  auth: number;
   places: any;
+  user: any;
 }
 
-const App: React.FC<IApp> = ({user, places}) => {
+const App: React.FC<IApp> = ({auth, places, user}) => {
   const [selectedNav, setSelectedNav] = React.useState(0);
   return (<>
       <Router>
               <Stack hideNavBar key='root'>
                 {
-                  user.auth === -1 ? <Stack hideNavBar>
+                  auth === -1 ? <Stack hideNavBar>
                   <Scene key='loginprompt' component={LoginPrompt} />
                   <Scene key='login' component={LoginForm} />
                   <Scene key='register' component={RegisterForm} />
                   <Scene key='guest' component={GuestForm} />
-                </Stack> :
-                  <Scene key='home' component={(params: any) => <Home selectedNav={selectedNav} places={places} params={params} />} />
+                </Stack> : <Stack hideNavBar>
+                  <Scene key='home' component={(params: any) => <Home userInfo={user} selectedNav={selectedNav} places={places} params={params} />} />
+                  <Scene key='userEdit' component={() => <UserEdit userInfo={user} />} />
+                  </Stack>
                 }
               </Stack>
       </Router>
-      {/* <Text>{user.auth}</Text> */}
-      {user.auth !== -1 && <BottomBar selectedNav={selectedNav} changeNav={(nextNav: number) => setSelectedNav(nextNav)} />}
+
+      {auth !== -1 && <BottomBar selectedNav={selectedNav} changeNav={(nextNav: number) => setSelectedNav(nextNav)} />}
   </>
   );
 };
@@ -46,8 +50,9 @@ const App: React.FC<IApp> = ({user, places}) => {
 const mapStateToProps = (state: Tstore) => {
   const t = state;
   return {
-    user: t.main,
-    places: t.places
+    auth: t.main.auth,
+    places: t.places,
+    user: t.user
   }
 }
 

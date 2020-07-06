@@ -2,6 +2,7 @@ import { createStore, Reducer, applyMiddleware, combineReducers } from "redux";
 import thunk from 'redux-thunk';
 import { TACTIONS, ACTIONS } from "../actions/main";
 import { places, TplacesInitialState } from "./places";
+import { user, TinitialUserState } from "./user";
 
 export type TinitialState = {
     auth: number;
@@ -11,9 +12,12 @@ export type TinitialState = {
 }
 
 export type Tstore = {
-    main: TinitialState,
-    places: TplacesInitialState
+    main: TinitialState;
+    places: TplacesInitialState;
+    user: TinitialUserState;
 }
+
+
 
 const initialState = {
     auth: -1,
@@ -25,8 +29,6 @@ const initialState = {
 const main: Reducer<TinitialState, TACTIONS> = (state = initialState, action) => {
     switch(action.type) {
         case ACTIONS.LOG_IN:
-            // const user = {...state};
-            // user.userInfo = {}
             return {
                 ...state,
                 ...action.payload
@@ -40,4 +42,4 @@ const main: Reducer<TinitialState, TACTIONS> = (state = initialState, action) =>
     }
 }
 
-export default createStore(combineReducers({main, places}), applyMiddleware(thunk));
+export default createStore(combineReducers({main, places, user}), applyMiddleware(thunk));

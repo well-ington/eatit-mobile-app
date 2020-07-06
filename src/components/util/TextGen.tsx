@@ -10,13 +10,22 @@ const TextGenerated = styled.Text`
 interface ITextGen {
     type: string;
     center?: boolean;
+    strike?: boolean;
+    color?: string;
+    style?: any;
 }
 
 const textTypes = ['title','sub','main','small'];
 
 const TextGen: React.FC<ITextGen> = (props) => {
     const indexOfType = textTypes.indexOf(props.type);
-    return <TextGenerated style={[[styles.title, styles.sub, styles.main, styles.small][indexOfType], props.center && styles.centered]}>
+    return <TextGenerated style={[
+        [styles.title, styles.sub, styles.main, styles.small][indexOfType], 
+        props.center && styles.centered, 
+        props.strike && styles.striked,
+        props.style && props.style,
+        props.color && styles[props.color]
+        ]}>
         {props.children}
     </TextGenerated>
 }
@@ -37,6 +46,22 @@ const styles = StyleSheet.create({
     },
     centered: {
         textAlign: 'center'
+    },
+    striked: {
+        textDecorationLine: 'line-through',
+        textDecorationStyle: 'solid'
+    },
+    red: {
+        color: 'crimson'
+    },
+    blue: {
+        color: 'skyblue'
+    },
+    green: {
+        color: 'limegreen'
+    },
+    purple: {
+        color: 'rebeccapurple'
     }
 });
 

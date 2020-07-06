@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { Text, Image, TouchableHighlight } from 'react-native';
+import { Text, Image, TouchableHighlight, TextInput } from 'react-native';
 import { ButtonGen } from '../components/util/ButtonGen';
-import { InputTextGen } from '../components/util/InputTextGen';
+import InputTextGen from '../components/util/InputTextGen';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { doLogin } from '../store/actions/main';
@@ -30,6 +30,10 @@ interface ILoginForm {
     login: (type: string, userInfo?: any) => void;
 }
 
+const ButtonContainer = styled.View`
+    padding: 8px;
+`;
+
 
 const LoginForm: React.FC<ILoginForm> = ({login}) => {
     const [email, setEmail] = React.useState('');
@@ -38,24 +42,22 @@ const LoginForm: React.FC<ILoginForm> = ({login}) => {
     
 
     const selectedForm = loginType === 'email' ? <>
-    <MediumImage source={{uri: 'https://picsum.photos/150'}} />
-    <Text>email</Text>
-    <InputTextGen autoFocus onChange={(text: any) => setEmail(email + text)} />
-    
-    <Text>password</Text>
-    <InputTextGen onChange={(text: any) => setPassword(password + text)} />
+    {/* <MediumImage source={{uri: 'https://picsum.photos/150'}} /> */}
 
+    <InputTextGen label='Email' type='main' value={email} onChange={(event: any) => setEmail(event.nativeEvent.text)} />
+    {/* <TextInput value={email} onChange={(event: any) => setEmail(event.nativeEvent.text)} /> */}
+   
+    <InputTextGen secureTextEntry label='Password' type='sub' value={password} onChange={(event: any) => setPassword(event.nativeEvent.text)} />
 
-    <ButtonGen title='Enter' onPress={() => {
-        login('guest');
-        // Actions.home({id: 0});
-        }} type='primary' />
-    <ButtonGen title='Forgot my password' onPress={() => console.log('ahoy')} type='text' />
+    <ButtonContainer>
+        <ButtonGen title='Enter' onPress={() => login('guest')} type='primary' />
+        <ButtonGen title='Forgot my password' onPress={() => console.log('ahoy')} type='text' />
+    </ButtonContainer>
     </>
     : loginType === 'phone' ? <>
     <MediumImage source={{uri: 'https://picsum.photos/150'}} />
     <Text>your phone</Text>
-    <InputTextGen autoFocus onChange={(text: any) => setEmail(email + text)} />
+    <InputTextGen autoFocus type='main' value={email} onChange={(event: any) => setEmail(event.nativeEvent.text)} />
     </> : <>
                     <Text>How do you wanna login?</Text>
                     <ButtonGen type='secondary' title='email' onPress={() => setLoginType('email')} />

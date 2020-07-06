@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { InputTextGen } from '../../components/util/InputTextGen';
+import InputTextGen from '../../components/util/InputTextGen';
 import SliderDisplay from '../../components/util/SliderDisplay';
 
 
@@ -45,9 +45,10 @@ interface IHomeSearch {
 
 
 const HomeSearch: React.FC<IHomeSearch> = ({categories}) => {
+    const [searchValue, setSearchValue] = React.useState('');
     return <>
     <InputContainer>
-            <InputTextGen />
+            <InputTextGen value={searchValue} type='sub' onChange={(event: any) => setSearchValue(event.nativeEvent.text)} />
     </InputContainer>
     <HomeContainer>                
         <SliderDisplay info={categories} type='categories--list' />
