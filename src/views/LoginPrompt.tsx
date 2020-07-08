@@ -23,7 +23,7 @@ const ButtonContainer = styled.View`
 export const LoginPrompt = () => {
     return <LoginContainer>
         <ButtonContainer>
-            <ButtonGen title={'Login'} onPress={() => Actions.login()} type='primary' />
+            <ButtonGen title={'Login'} onPress={() => Actions.drawerOpen()} type='primary' />
             <ButtonGen title={'Register'} onPress={() => Actions.register()} type='secondary' />
             <ButtonGen title={'Enter as a guest'} onPress={() => Actions.guest()} type='text' />
         </ButtonContainer>

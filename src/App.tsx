@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import { TinitialState, Tstore } from './store/reducer/main';
 import { Text } from 'react-native';
 import UserEdit from './views/UserEdit';
+import LoginDrawer from './views/sub/LoginDrawer';
 
 // declare const global: {HermesInternal: null | {}};
 
@@ -25,24 +26,26 @@ interface IApp {
 
 const App: React.FC<IApp> = ({auth, places, user}) => {
   const [selectedNav, setSelectedNav] = React.useState(0);
-  return (<>
-      <Router>
-              <Stack hideNavBar key='root'>
+  return (<>     
                 {
-                  auth === -1 ? <Stack hideNavBar>
-                  <Scene key='loginprompt' component={LoginPrompt} />
-                  <Scene key='login' component={LoginForm} />
+                  auth === -1 ? <Router>
+                  <Stack key='root' hideNavBar>
+                      <Scene drawer contentComponent={LoginDrawer}>
+                        <Stack hideNavBar>
+                          <Scene key='loginprompt' component={LoginPrompt} />
+                        </Stack>
+                      </Scene>
+                  <Scene key='login' component={(params: any) => <LoginForm params={params} />} />
                   <Scene key='register' component={RegisterForm} />
                   <Scene key='guest' component={GuestForm} />
-                </Stack> : <Stack hideNavBar>
-                  <Scene key='home' component={(params: any) => <Home userInfo={user} selectedNav={selectedNav} places={places} params={params} />} />
-                  <Scene key='userEdit' component={() => <UserEdit userInfo={user} />} />
-                  </Stack>
-                }
-              </Stack>
-      </Router>
+                </Stack>
+                </Router> : <>
+                  <Home userInfo={user} selectedNav={selectedNav} places={places} />
+                  <BottomBar selectedNav={selectedNav} changeNav={(nextNav: number) => setSelectedNav(nextNav)} />
+                </>
+                }     
 
-      {auth !== -1 && <BottomBar selectedNav={selectedNav} changeNav={(nextNav: number) => setSelectedNav(nextNav)} />}
+      
   </>
   );
 };

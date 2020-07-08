@@ -1,9 +1,19 @@
 const LOG_IN: string = 'LOG-IN';
 const LOG_OFF: string = 'LOG-OFF';
 const UPDATE_USER: string = 'UPDATE-USER'
+const SELECT_RESTAURANT: string = 'SELECT-RESTAURANT';
+
+
 
 export const ACTIONS = {
-    LOG_IN, LOG_OFF, UPDATE_USER
+    LOG_IN, LOG_OFF, UPDATE_USER, SELECT_RESTAURANT
+}
+
+type TSELECT_RESTAURANT = {
+    type: string;
+    payload: {
+        selectedRestaurant: number;
+    }
 }
 
 type TUPDATE_USER = {
@@ -31,7 +41,7 @@ type TLOG_OFF = {
 }
 
 
-export type TACTIONS = TLOG_IN | TLOG_OFF | TUPDATE_USER; 
+export type TACTIONS = TLOG_IN | TLOG_OFF | TUPDATE_USER | TSELECT_RESTAURANT; 
 
 export const doLogin = (type: string, userInfo?: any) => {
     return async (dispatch: any) => {
@@ -64,5 +74,11 @@ export const updateUser = (userInfo: {
     }) => {
     return (dispatch: any) => {
         dispatch({type: ACTIONS.UPDATE_USER, payload: userInfo})
+    }
+}
+
+export const selectRestaurant = (selected: number) => {
+    return (dispatch: any) => {
+        dispatch({type: ACTIONS.SELECT_RESTAURANT, payload: {selectedRestaurant: selected}});
     }
 }

@@ -5,9 +5,10 @@ import styled from 'styled-components/native';
 import OptionCards from '../components/util/OptionCards';
 import HomeUser from './sub/HomeUser';
 import HomeSearch from './sub/HomeSearch';
-import HomeMain from './sub/HomeMain';
+import HomeMainHoc from './sub/HomeMainHoc';
 import HomeOrder from './sub/HomeOrder';
 import HomeRestaurant from './sub/HomeRestaurant';
+import { Scene, Stack, Router} from 'react-native-router-flux';
 
 const HomeContainer = styled.ScrollView`
     /* background-color: #fff; */
@@ -17,13 +18,14 @@ const HomeContainer = styled.ScrollView`
 interface IHome {
     selectedNav: number;
     places: any;
-    params: {restID?: number;};
+    params?: {restID?: number;};
     userInfo: any;
 }
 
 
 
 const Home: React.FC<IHome> = ({ params, userInfo, places, selectedNav }) => {
+
     switch (selectedNav) {
         case 1:
             return <HomeSearch categories={places.categories} />
@@ -32,10 +34,11 @@ const Home: React.FC<IHome> = ({ params, userInfo, places, selectedNav }) => {
         case 3:
             return <HomeUser userInfo={userInfo} />
         default:
-            if (params.restID) {
-                return <HomeRestaurant place={places.places[params.restID]} />
-            }
-            else return <HomeMain places={places} />
+            return <Router>
+                <Stack hideNavBar>
+                    <Scene initial key='main' component={(params: any) => <HomeMainHoc params={params} />} />
+                </Stack>
+            </Router>
     }
 }
 

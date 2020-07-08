@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components/native';
 import TextGen from '../../components/util/TextGen';
 import ItemCard from '../../components/util/ItemCard';
-import { FlatList } from 'react-native';
+import { FlatList, TouchableHighlight } from 'react-native';
+import { connect } from 'react-redux';
+import { Tstore } from 'src/store/reducer/main';
 
 const Container = styled.ScrollView`
 
@@ -23,64 +25,33 @@ const SideScrollView = styled.ScrollView`
     
 `;
 
-const HomeRestaurant: React.FC<IHomeRestaurant> = ({place: {name, deliveryFee, rating, menu, categories, promo}, place}) => {
-    // console.log(promo.length);
-    const [selectedIndex, setSelectedIndex] = React.useState(-1);
-    // return <Container>
-    //     <CategoryContainer>
-    //     <TextGen type='main'>
-    //         {name}
-    //     </TextGen>
-    //     </CategoryContainer>
-    //     <CategoryContainer>
-    //         <TextGen type='sub'>
-    //             {categories[0]}
-    //         </TextGen>
-    //         <TextGen type='sub'>
-    //             {rating.toFixed(1)}
-    //         </TextGen>
-    //     </CategoryContainer>
-    //     {
-    //         promo.length > 0 && <SideScrollView horizontal>
-    //             {
-    //                 promo.map((e: [number, number], index: number) => <ItemCard type='highlight' key={`${e[0]}_${Math.random() * 900}`} item={place.menu[e[0]].items[e[1]]} />)
-    //             }
-    //         </SideScrollView>
-    //     }
-
-    //     <FlatList data={menu} renderItem={({item, index}) =><>
-    //         <TextGen type='main'>{item.section}</TextGen>
-    //         <TextGen type='main'>{item.description}</TextGen>
-    //     {
-    //        index === selectedIndex && item.items.map((e: any) => <ItemCard type='' item={e} />)
-    //     }
-    //     </>} />
-    // </Container>
-
-    return <FlatList data={[
+const HomeRestaurant: React.FC<IHomeRestaurant> = ({place}) => {
+    // console.log(place);
+    return place ? <>
+    <FlatList  onScroll={(event: any) => console.log(event)} data={[
         <CategoryContainer>
             <TextGen type='main'>
-                {name}
+                {place.name}
             </TextGen>
         </CategoryContainer>,
          <CategoryContainer>
          <TextGen type='sub'>
-             {categories[0]}
+             {place.categories[0]}
          </TextGen>
          <TextGen type='sub'>
-             {rating.toFixed(1)}
+             {place.rating.toFixed(1)}
          </TextGen>
         </CategoryContainer>,
         <>
          {
-            promo.length > 0 && <SideScrollView horizontal>
+            place.promo.length > 0 && <SideScrollView horizontal>
                 {
-                    promo.map((e: [number, number], index: number) => <ItemCard type='highlight' key={`${e[0]}_${Math.random() * 900}`} item={place.menu[e[0]].items[e[1]]} />)
+                    place.promo.map((e: [number, number], index: number) => <ItemCard type='highlight' key={`${e[0]}_${Math.random() * 900}`} item={place.menu[e[0]].items[e[1]]} />)
                 }
             </SideScrollView>
         }
         </>,
-         <FlatList data={menu} keyExtractor={(item, index) => `${index}_menu`}
+         <FlatList data={place.menu} keyExtractor={(item, index) => `${index}_menu`}
          renderItem={({item, index}) =><>
          <TextGen type='main'>{item.section}</TextGen>
          <TextGen type='sub'>{item.description}</TextGen>
@@ -92,8 +63,16 @@ const HomeRestaurant: React.FC<IHomeRestaurant> = ({place: {name, deliveryFee, r
         renderItem={({item, index}) => <>
         {item}
         </>} />
-
+    </> : null;
 }
 
+const mapStateToProps = (state: Tstore) => {
+    const t = state;
+    return {
+        place: t.places.places[t.main.selectedRestaurant]
+    }
+}
 
-export default HomeRestaurant;
+export default connect(mapStateToProps)(HomeRestaurant);
+
+// export default HomeRestaurant;

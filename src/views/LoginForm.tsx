@@ -28,6 +28,7 @@ const MediumImage = styled.ImageBackground`
 
 interface ILoginForm {
     login: (type: string, userInfo?: any) => void;
+    params: any;
 }
 
 const ButtonContainer = styled.View`
@@ -35,13 +36,13 @@ const ButtonContainer = styled.View`
 `;
 
 
-const LoginForm: React.FC<ILoginForm> = ({login}) => {
+const LoginForm: React.FC<ILoginForm> = ({login, params}) => {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const [loginType, setLoginType] = React.useState('');
-    
+    // const [loginType, setLoginType] = React.useState('email');
+    // console.log(params.ID);
 
-    const selectedForm = loginType === 'email' ? <>
+    const selectedForm = params.ID === 'email' ? <>
     {/* <MediumImage source={{uri: 'https://picsum.photos/150'}} /> */}
 
     <InputTextGen label='Email' type='main' value={email} onChange={(event: any) => setEmail(event.nativeEvent.text)} />
@@ -54,15 +55,11 @@ const LoginForm: React.FC<ILoginForm> = ({login}) => {
         <ButtonGen title='Forgot my password' onPress={() => console.log('ahoy')} type='text' />
     </ButtonContainer>
     </>
-    : loginType === 'phone' ? <>
+    : <>
     <MediumImage source={{uri: 'https://picsum.photos/150'}} />
     <Text>your phone</Text>
     <InputTextGen autoFocus type='main' value={email} onChange={(event: any) => setEmail(event.nativeEvent.text)} />
-    </> : <>
-                    <Text>How do you wanna login?</Text>
-                    <ButtonGen type='secondary' title='email' onPress={() => setLoginType('email')} />
-                    <ButtonGen type='secondary' title='phone' onPress={() => setLoginType('phone')} />
-    </>;
+    </> ;
 
     return <Container>        
     <FormContainer>

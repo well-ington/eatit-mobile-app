@@ -8,7 +8,8 @@ export type TinitialState = {
     auth: number;
         name: string;
         email: string;
-        phone: string;  
+        phone: string; 
+        selectedRestaurant: number;
 }
 
 export type Tstore = {
@@ -23,7 +24,8 @@ const initialState = {
     auth: -1,
     name: '',
     email: '',
-    phone: ''
+    phone: '',
+    selectedRestaurant: 0
 }
 
 const main: Reducer<TinitialState, TACTIONS> = (state = initialState, action) => {
@@ -36,6 +38,11 @@ const main: Reducer<TinitialState, TACTIONS> = (state = initialState, action) =>
         case ACTIONS.LOG_OFF:
             return {
                 ...initialState
+            }
+        case ACTIONS.SELECT_RESTAURANT:
+            return {
+                ...state,
+                ...action.payload
             }
         default:
             return state;

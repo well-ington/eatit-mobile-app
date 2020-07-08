@@ -6,6 +6,8 @@ import SliderDisplay from '../../components/util/SliderDisplay';
 import TextGen from '../../components/util/TextGen';
 import RestaurantCard from '../../components/util/RestaurantCard';
 import { Actions } from 'react-native-router-flux';
+import { selectRestaurant } from '../../store/actions/main';
+import {connect} from 'react-redux';
 
 const HomeContainer = styled.ScrollView`
     /* background-color: #fff; */
@@ -41,18 +43,19 @@ const FilterContainer = styled.View`
 
 interface IHomeMain {
     places: any;
+    select: (e: number) => void;
 }
 
 
-const HomeMain: React.FC<IHomeMain> = ({places}) => {
+const HomeMain: React.FC<IHomeMain> = ({places, select}) => {
     const [modality, setModality] = React.useState(0);
-    const [filterType, setFilter] = React.useState('rating');
+    const [filterType, setFilter] = React.useState(0);
     const filtered = [...places.places];
     switch(filterType) {
-        case 'rating':
+        case 0:
             filtered.sort((a: any, b: any) => a.rating < b.rating ? 1 : -1);
             break;
-        case 'deliveryFee':
+        case 1:
             filtered.sort((a: any, b: any) => a.deliveryFee < b.deliveryFee ? -1 : 1)
             break;
         default:
@@ -61,8 +64,9 @@ const HomeMain: React.FC<IHomeMain> = ({places}) => {
     return <FlatList data={[
     <ModalityContainer>
     {
-        ['delivery', 'pick up'].map((name: string, index: number) => <TouchableHighlight onPress={() => modality !== index && setModality(index)} key={name}>
-            <ModalityText style={index === modality && styles.activeModality}>{name}</ModalityText>
+        ['Entrega', 'Retirada'].map((name: string, index: number) => <TouchableHighlight onPress={() => modality !== index && setModality(index)} key={name}>
+            {/* <ModalityText style={index === modality && styles.activeModality}>{name}</ModalityText> */}
+    <TextGen type='subselector' padding='md' margin='sm' active={index === modality ? 0 : -1}>{name}</TextGen>
         </TouchableHighlight>)
     }
     </ModalityContainer>,
@@ -71,13 +75,19 @@ const HomeMain: React.FC<IHomeMain> = ({places}) => {
     </View>,
     <FilterContainer>
     {
-    ['nota','frete'].map((e: string, i: number) => 
-    <TouchableHighlight key={e + 'filter'} onPress={ () => setFilter(['rating', 'deliveryFee'][i])}  >
-        <TextGen type='main'>{e}</TextGen>
+    ['Nota','Frete'].map((e: string, i: number) => 
+    <TouchableHighlight key={e + 'filter'} onPress={ () => setFilter(i)}  >
+        <TextGen active={filterType === i ? 0 : -1} type='subselector'>{e}</TextGen>
     </TouchableHighlight>)
     }
     </FilterContainer>,
-    <FlatList data={filtered} keyExtractor={(item, index) => index + 'virtualizedList'} renderItem={({item, index}) => <TouchableHighlight onPress={() => Actions.home({restID: item.id})}><RestaurantCard place={item} /></TouchableHighlight> } />
+    <FlatList data={filtered} keyExtractor={(item, index) => index + 'virtualizedList'} renderItem={({item, index}) => <TouchableHighlight onPress={() => {
+        // Actions.main({ID: item.id});
+        select(item.id);
+        Actions.drawerOpen();
+        }}>
+        <RestaurantCard place={item} />
+        </TouchableHighlight> } />
 ]} keyExtractor={(item, index) => index + 'parentFlatList'} renderItem={({item, index}) => <>{item}</>} />;
 }
 
@@ -88,4 +98,12 @@ const styles = StyleSheet.create({
     }
 })
 
-export default HomeMain;
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        select: (id: number) => dispatch(selectRestaurant(id))
+    }
+}
+
+
+// export default HomeMain;
+export default connect(null, mapDispatchToProps)(HomeMain);
