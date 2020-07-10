@@ -11,6 +11,12 @@ type Tplaces = {
     time: number;
     hours: string[];
     promo: [number,number][];
+    payment: {
+        money: boolean;
+        credit: boolean;
+        debit: boolean;
+        online: boolean;
+    }
     menu: {
         section: string;
         description: string;        
@@ -67,7 +73,7 @@ const randomGen = (type: string) => {
         case 'menu':
             const menuArray = [];
             const promoArray: [number,number][] = [];
-            const priceRange = ~~(Math.random() * 3);
+            const priceRange = ~~(Math.random() * 3) + 1;
             const sectionNames: string[] = [...'Florg,Bvrger,Drinks,Flembs,Blerbarg,Somfi,Viner'.split(',')];
             const sectionDesc: string[] = [...'Daren norb,Dinco oell,Puring ducksun,Abenic auversen,Vindac oiseau,Vandec avine'.split(',')];
             const itemName: string[] = [...'Burg,Flimper,Tako,Polleg,Vinta,Borem,Crispsum,Friedsen,Edenig,Cheeve,Special Teg,Vinarg Induminanta,Inva Pourinda,Kimba Herk'.split(',')];
@@ -81,7 +87,7 @@ const randomGen = (type: string) => {
                 for (let o = 0; o < itemQuantity; o++) {
                     const pricesArray = [];
                     const hasPromo = Math.random() < 0.15 ? ((Math.random() * 25) + 5)/100 : 0;                    
-                    const basePrice = (Math.random() * (priceRange * 2.5)) + (priceRange * 1.5);
+                    const basePrice = (Math.random() * (priceRange * 5)) + (priceRange * 1.5);
 
                     for (let k = 0; k < sectionOptions; k++) {
                         pricesArray.push(basePrice + (basePrice * k * priceRange * 0.075));
@@ -124,7 +130,13 @@ const generateRestaurants = (placesToGenerate: number) => {
             rating: (Math.random() > 0.05 ? ((Math.random() * 3) + 2) : (Math.random() * 3)),
             hours: randomGen('hours'),
             menu: menuGenerated,
-            promo: promoMap
+            promo: promoMap,
+            payment: {
+                money: Math.random() < 0.8,
+                credit: Math.random() < 0.45,
+                debit: Math.random() < 0.6,
+                online: Math.random() < 0.6
+            }
         });
     }
     return [...placesArray];

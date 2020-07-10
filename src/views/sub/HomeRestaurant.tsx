@@ -25,12 +25,22 @@ const SideScrollView = styled.ScrollView`
     
 `;
 
+const PaddingContainer = styled.View`
+    padding: 42px 16px;
+`;
+
+const HeaderView = styled.View`
+    height: 125px;
+    background-color: limegreen;
+`;
+
 const HomeRestaurant: React.FC<IHomeRestaurant> = ({place}) => {
-    // console.log(place);
-    return place ? <>
-    <FlatList  onScroll={(event: any) => console.log(event)} data={[
+    return <FlatList data={[
+        <HeaderView>
+            
+        </HeaderView>,
         <CategoryContainer>
-            <TextGen type='main'>
+            <TextGen type='restname'>
                 {place.name}
             </TextGen>
         </CategoryContainer>,
@@ -53,8 +63,10 @@ const HomeRestaurant: React.FC<IHomeRestaurant> = ({place}) => {
         </>,
          <FlatList data={place.menu} keyExtractor={(item, index) => `${index}_menu`}
          renderItem={({item, index}) =><>
-         <TextGen type='main'>{item.section}</TextGen>
-         <TextGen type='sub'>{item.description}</TextGen>
+         <PaddingContainer>
+            <TextGen type='title'>{item.section}</TextGen>
+            <TextGen type='sub'>{item.description}</TextGen>
+         </PaddingContainer>
             {
                 item.items.map((e: any, index: number) => <ItemCard type='list-menu' image={index < 5} key={`${index}_${e}`} item={e} />)
             }
@@ -62,8 +74,7 @@ const HomeRestaurant: React.FC<IHomeRestaurant> = ({place}) => {
         ]} keyExtractor={(item, index) => `${index}_restaurant_child`}
         renderItem={({item, index}) => <>
         {item}
-        </>} />
-    </> : null;
+        </>} />;
 }
 
 const mapStateToProps = (state: Tstore) => {
@@ -74,5 +85,3 @@ const mapStateToProps = (state: Tstore) => {
 }
 
 export default connect(mapStateToProps)(HomeRestaurant);
-
-// export default HomeRestaurant;

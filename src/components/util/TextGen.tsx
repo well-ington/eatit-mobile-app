@@ -19,16 +19,16 @@ interface ITextGen {
     border?: boolean;
 }
 
-const textTypes = ['title','sub','main','small', 'subselector'];
+const textTypes = ['title','sub','main','small', 'subselector', 'restname'];
 
 const TextGen: React.FC<ITextGen> = (props) => {
     const indexOfType = textTypes.indexOf(props.type);
     return <TextGenerated style={[
-        [styles.title, styles.sub, styles.main, styles.small, styles.subSelector][indexOfType], 
+        [styles.title, styles.sub, styles.main, styles.small, styles.subSelector, styles.restName][indexOfType], 
         props.center && styles.centered, 
         props.strike && styles.striked,
         props.style && props.style,
-        props.color ? styles[props.color] : styles.black,
+        props.color ? styles[props.color] : null,
         props.padding && styles[`p${props.padding}`],
         props.margin && styles[`m${props.margin}`],
         props.active !== -1 && [styles.underActive, styles[`${props.color}Active`]][props.active],
@@ -40,7 +40,7 @@ const TextGen: React.FC<ITextGen> = (props) => {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 22
+        fontSize: 28
     },
     sub: {
         fontSize: 18,
@@ -52,9 +52,12 @@ const styles = StyleSheet.create({
     small: {
         fontSize: 16
     },
+    restName: {
+        fontSize: 32
+        
+    },
     subSelector: {
         fontSize: 22,
-        // borderRadius: 15,
         paddingTop: 8,
         paddingLeft: 16,
         paddingRight: 16,
@@ -137,10 +140,7 @@ const styles = StyleSheet.create({
     },
     purple: {
         color: 'rebeccapurple'
-    },
-    black: {
-        color: '#222'
-    }
+    }   
 });
 
 export default TextGen;

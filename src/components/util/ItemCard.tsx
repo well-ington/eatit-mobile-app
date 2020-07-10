@@ -110,11 +110,11 @@ const ItemCard: React.FC<IItemCard> = ({item, type, image = true}) => {
             <PriceContainer>
                 {
                     item.promo > 0 && <TextGen style={[styles.priceMargin]} color='green' type='main'>
-                    R$ {(item.prices[0] * (1 - item.promo)).toFixed(2)}
+                    $ {(item.prices[0] * (1 - item.promo)).toFixed(2)}
                 </TextGen>
                 }
                 <TextGen type={item.promo > 0 ? 'sub' : 'main'} strike={item.promo > 0}>
-                    R$ {item.prices[0].toFixed(2)}
+                    $ {item.prices[0].toFixed(2)}
                 </TextGen>           
             </PriceContainer>
             </TextHeaderContainer>

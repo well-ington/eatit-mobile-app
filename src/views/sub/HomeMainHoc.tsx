@@ -15,7 +15,7 @@ interface IHomeMainHOC {
 
 const dim = Dimensions.get('window').width;
 
-const HomeMainHOC: React.FC<IHomeMainHOC> = ({places, params, selected}) => {
+const HomeMainHOC: React.FC<IHomeMainHOC> = ({places, params}) => {
     const a = 0;
 
     return <Router>

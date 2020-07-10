@@ -8,6 +8,7 @@ import RestaurantCard from '../../components/util/RestaurantCard';
 import { Actions } from 'react-native-router-flux';
 import { selectRestaurant } from '../../store/actions/main';
 import {connect} from 'react-redux';
+import { Tstore } from 'src/store/reducer/main';
 
 const HomeContainer = styled.ScrollView`
     /* background-color: #fff; */
@@ -64,7 +65,7 @@ const HomeMain: React.FC<IHomeMain> = ({places, select}) => {
     return <FlatList data={[
     <ModalityContainer>
     {
-        ['Entrega', 'Retirada'].map((name: string, index: number) => <TouchableHighlight onPress={() => modality !== index && setModality(index)} key={name}>
+        ['Delivery', 'Pick up'].map((name: string, index: number) => <TouchableHighlight onPress={() => modality !== index && setModality(index)} key={name}>
             {/* <ModalityText style={index === modality && styles.activeModality}>{name}</ModalityText> */}
     <TextGen type='subselector' padding='md' margin='sm' active={index === modality ? 0 : -1}>{name}</TextGen>
         </TouchableHighlight>)
@@ -75,16 +76,16 @@ const HomeMain: React.FC<IHomeMain> = ({places, select}) => {
     </View>,
     <FilterContainer>
     {
-    ['Nota','Frete'].map((e: string, i: number) => 
+    ['Rating','Delivery Fee'].map((e: string, i: number) => 
     <TouchableHighlight key={e + 'filter'} onPress={ () => setFilter(i)}  >
         <TextGen active={filterType === i ? 0 : -1} type='subselector'>{e}</TextGen>
     </TouchableHighlight>)
     }
     </FilterContainer>,
     <FlatList data={filtered} keyExtractor={(item, index) => index + 'virtualizedList'} renderItem={({item, index}) => <TouchableHighlight onPress={() => {
-        // Actions.main({ID: item.id});
-        select(item.id);
         Actions.drawerOpen();
+        select(item.id);
+        // console.log('what');
         }}>
         <RestaurantCard place={item} />
         </TouchableHighlight> } />
@@ -104,6 +105,12 @@ const mapDispatchToProps = (dispatch: any) => {
     }
 }
 
+const mapStateToProps = (state: Tstore) => {
+    const t = state;
+    return {
+        places: t.places
+    }
+}
 
 // export default HomeMain;
-export default connect(null, mapDispatchToProps)(HomeMain);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeMain);

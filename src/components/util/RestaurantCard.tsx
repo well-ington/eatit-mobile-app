@@ -13,7 +13,6 @@ const Container = styled.View`
     border-width: 1px;
     border-color: #ddd;
     margin: 8px 0;
-    /* padding: 8px; */
 `;
 
 const ImagePlaceholder = styled.View`
@@ -64,7 +63,7 @@ const RestaurantCard: React.FC<ICard> = ({ place }) => {
                 </SubText>
             </View>
             <SubText>
-                {place.time} 🚲 ${place.deliveryFee}.00
+                {place.time} 🚲 {place.deliveryFee > 0 ? `$${place.deliveryFee}.00` : 'FREE'}
             </SubText>
         </TextContainer>
     </Container>
