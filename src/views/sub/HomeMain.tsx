@@ -11,7 +11,6 @@ import {connect} from 'react-redux';
 import { Tstore } from 'src/store/reducer/main';
 
 const HomeContainer = styled.ScrollView`
-    /* background-color: #fff; */
 `;
 
 
@@ -66,7 +65,6 @@ const HomeMain: React.FC<IHomeMain> = ({places, select}) => {
     <ModalityContainer>
     {
         ['Delivery', 'Pick up'].map((name: string, index: number) => <TouchableHighlight onPress={() => modality !== index && setModality(index)} key={name}>
-            {/* <ModalityText style={index === modality && styles.activeModality}>{name}</ModalityText> */}
     <TextGen type='subselector' padding='md' margin='sm' active={index === modality ? 0 : -1}>{name}</TextGen>
         </TouchableHighlight>)
     }
@@ -85,7 +83,6 @@ const HomeMain: React.FC<IHomeMain> = ({places, select}) => {
     <FlatList data={filtered} keyExtractor={(item, index) => index + 'virtualizedList'} renderItem={({item, index}) => <TouchableHighlight onPress={() => {
         Actions.drawerOpen();
         select(item.id);
-        // console.log('what');
         }}>
         <RestaurantCard place={item} />
         </TouchableHighlight> } />

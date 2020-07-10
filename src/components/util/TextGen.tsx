@@ -140,7 +140,10 @@ const styles = StyleSheet.create({
     },
     purple: {
         color: 'rebeccapurple'
-    }   
+    },
+    yellow: {
+        color: 'hsl(45, 80%, 50%)'
+    }
 });
 
 export default TextGen;

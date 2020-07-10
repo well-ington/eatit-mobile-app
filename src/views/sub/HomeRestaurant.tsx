@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import TextGen from '../../components/util/TextGen';
 import ItemCard from '../../components/util/ItemCard';
-import { FlatList, TouchableHighlight } from 'react-native';
+import { FlatList, TouchableHighlight, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Tstore } from 'src/store/reducer/main';
 
@@ -13,11 +13,14 @@ const Container = styled.ScrollView`
 interface IHomeRestaurant {
     place: any;
 }
-
 const CategoryContainer = styled.View`
+    padding: 8px;
+`;
+
+const SubCategoryContainer = styled.View`
     flex-direction: row;
     justify-content: space-between;
-    padding: 8px;
+    /* padding: 8px; */
     /* text-align: center; */
 `;
 
@@ -43,14 +46,14 @@ const HomeRestaurant: React.FC<IHomeRestaurant> = ({place}) => {
             <TextGen type='restname'>
                 {place.name}
             </TextGen>
-        </CategoryContainer>,
-         <CategoryContainer>
-         <TextGen type='sub'>
-             {place.categories[0]}
-         </TextGen>
-         <TextGen type='sub'>
-             {place.rating.toFixed(1)}
-         </TextGen>
+            <SubCategoryContainer>
+                <TextGen type='sub'>
+                {place.categories[0]}
+            </TextGen>
+            <TextGen type='main' color='yellow'>
+            ⭐{place.rating.toFixed(1)} ({~~(Math.random() * 200)})
+            </TextGen>
+            </SubCategoryContainer>
         </CategoryContainer>,
         <>
          {
