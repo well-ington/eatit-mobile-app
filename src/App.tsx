@@ -15,6 +15,8 @@ import { TinitialState, Tstore } from './store/reducer/main';
 import { Text } from 'react-native';
 import UserEdit from './views/UserEdit';
 import LoginDrawer from './views/sub/LoginDrawer';
+import Geolocation from './views/Geolocation';
+import Notifications from './views/Notifications';
 
 // declare const global: {HermesInternal: null | {}};
 
@@ -30,14 +32,17 @@ const App: React.FC<IApp> = ({auth, places, user}) => {
                 {
                   auth === -1 ? <Router>
                   <Stack key='root' hideNavBar>
-                      <Scene drawer contentComponent={LoginDrawer}>
+                    <Scene key='enableGeo' component={Geolocation} />
+                    <Scene key='enableNot' component={Notifications} />
+                      {/* <Scene drawer contentComponent={LoginDrawer}>
                         <Stack hideNavBar>
                           <Scene key='loginprompt' component={LoginPrompt} />
                         </Stack>
                       </Scene>
                   <Scene key='login' component={(params: any) => <LoginForm params={params} />} />
                   <Scene key='register' component={RegisterForm} />
-                  <Scene key='guest' component={GuestForm} />
+                  <Scene key='guest' component={GuestForm} /> */}
+
                 </Stack>
                 </Router> : <>
                   <Home userInfo={user} selectedNav={selectedNav} places={places} />

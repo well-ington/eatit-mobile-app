@@ -17,6 +17,7 @@ interface ITextGen {
     margin?: string;
     active?: number;
     border?: boolean;
+    bold?: boolean;
 }
 
 const textTypes = ['title','sub','main','small', 'subselector', 'restname'];
@@ -32,7 +33,8 @@ const TextGen: React.FC<ITextGen> = (props) => {
         props.padding && styles[`p${props.padding}`],
         props.margin && styles[`m${props.margin}`],
         props.active !== -1 && [styles.underActive, styles[`${props.color}Active`]][props.active],
-        props.border && props.active === -1 && styles[props.color ? `${props.color}Border` : 'simpleBorder']
+        props.border && props.active === -1 && styles[props.color ? `${props.color}Border` : 'simpleBorder'],
+        props.bold && styles.bolded
         ]}>
         {props.children}
     </TextGenerated>
@@ -143,6 +145,9 @@ const styles = StyleSheet.create({
     },
     yellow: {
         color: 'hsl(45, 80%, 50%)'
+    },
+    bolded: {
+        fontWeight: '800'
     }
 });
 

@@ -19,6 +19,7 @@ const ImagePlaceholder = styled.View`
     width: 60px;
     height: 60px;
     background-color: #444;
+    border-radius: 60px;
 `;
 
 const TextContainer = styled.View`
