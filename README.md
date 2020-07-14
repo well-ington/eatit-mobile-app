@@ -2,10 +2,10 @@ Project created using create-react-native-app using TypeScript template.
 
 This project intends to be a food/goods delivery template for React Native.
 
-## How to run:
+## How to install:
 <ul>
     <li>Clone this repository</li>
-    <li>Go to root folder and run `npm install`</li>
+    <li>Go to root folder and run `npm install` </li>
 </ul>
 
 Optional:

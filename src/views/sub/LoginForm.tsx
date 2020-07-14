@@ -4,6 +4,7 @@ import InputTextGen from '../../components/util/InputTextGen';
 import InputTextGenerator from '../../components/util/InputTextGenerator';
 import TextGen from '../../components/util/TextGen';
 import { ButtonGen } from '../../components/util/ButtonGen';
+import { Actions } from 'react-native-router-flux';
 
 const Container = styled.View`
     /* padding: 32px 0 16px 16px; */    
@@ -62,7 +63,7 @@ const LoginForm: React.FC<ILoginForm> = ({type}) => {
         </HeaderContainer>
         <ButtonContainer>
             {
-                [...(type !== 'phone' ? ['Confirm'] : ['Whatsapp', 'SMS'])].map((e: string, i: number) => <ButtonGen key={'login' + e} title={e} onPress={() => null} nopadding={type !== 'phone'} sizing={2} color={colored} type={['primary', 'secondary'][i]}  />)
+                [...(type !== 'phone' ? ['Confirm'] : ['Whatsapp', 'SMS'])].map((e: string, i: number) => <ButtonGen key={'login' + e} title={e} onPress={() => Actions.verifyCode({ID: type})} nopadding={type !== 'phone'} sizing={2} color={colored} type={['primary', 'secondary'][i]}  />)
             }
         </ButtonContainer>
     </Container>

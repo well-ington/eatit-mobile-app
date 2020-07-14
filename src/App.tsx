@@ -6,7 +6,7 @@ import {Router, Stack, Scene, Actions } from 'react-native-router-flux';
 
 import Home from './views/Home';
 import { LoginPrompt } from './views/LoginPrompt';
-import LoginForm from './views/LoginForm';
+import LoginForm from './views/sub/LoginForm';
 import { RegisterForm } from './views/RegisterForm';
 import { GuestForm } from './views/GuestForm';
 import BottomBar from './components/util/BottomBar';
@@ -19,6 +19,7 @@ import Geolocation from './views/Geolocation';
 import Notifications from './views/Notifications';
 import MailLogin from './views/MailLogin';
 import PhoneLogin from './views/PhoneLogin';
+import VerificationCode from './views/VerificationCode';
 
 // declare const global: {HermesInternal: null | {}};
 
@@ -37,8 +38,9 @@ const App: React.FC<IApp> = ({auth, places, user}) => {
                     <Scene key='enableGeo' component={Geolocation} />
                     <Scene key='enableNot' component={Notifications} />
                     <Scene key='loginPrompt' component={LoginPrompt} />
-                    <Scene key='phoneLogin' component={PhoneLogin} />
-                    <Scene key='mailLogin' component={MailLogin} />
+                    <Scene key='phoneLogin' component={ () =>  <LoginForm type='phone' />} />
+                    <Scene key='mailLogin' component={ () =>  <LoginForm type='mail' />} />
+                    <Scene key='verifyCode' component={ (params: any) => <VerificationCode type={params.ID} />} />
                       {/* <Scene drawer contentComponent={LoginDrawer}>
                         <Stack hideNavBar>
                           <Scene key='loginprompt' component={LoginPrompt} />
