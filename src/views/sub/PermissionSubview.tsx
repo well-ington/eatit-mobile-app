@@ -19,7 +19,8 @@ const ButtonContainer = styled.View`
 `;
 
 const TextContainer = styled.View`
-    /* text-align: center; */
+    padding: 8px;
+    width: 100%;
 `;
 
 const SampleContainer = styled.View`
@@ -29,9 +30,10 @@ const SampleContainer = styled.View`
 
 interface IPermissionSubview {
     type: string;
+    onPressHandler: () => void;
 }
 
-const PermissionSubview: React.FC<IPermissionSubview> = ({type}) => {
+const PermissionSubview: React.FC<IPermissionSubview> = ({type, onPressHandler}) => {
     const dummyPlace = {
         name: 'Burger Point',
         rating: 4.4,
@@ -50,15 +52,15 @@ const PermissionSubview: React.FC<IPermissionSubview> = ({type}) => {
         }
     </SampleContainer>
     <TextContainer>
-        <TextGen type='title' center bold>{type = 'geolocation' ? 'Enable Geolocation' : 'Enable notifications'}</TextGen>
-        <TextGen type='main' center>{type = 'geolocation' ? 'Enable this functionality to search for places close to you.' : 'Get push up informations about your current order and for discounts coupouns.'}</TextGen>
+        <TextGen type='title' center bold>{type === 'geolocation' ? 'Enable Geolocation' : 'Enable notifications'}</TextGen>
+        <TextGen type='main' center>{type === 'geolocation' ? 'Enable this functionality to search for places close to you.' : 'Get push up informations about your current order and for discounts coupouns.'}</TextGen>
     </TextContainer>
 
     
 
     <ButtonContainer>
         {
-            ['Skip', 'Enable'].map((e: string, i: number) => <ButtonGen key={e + i} title={e} onPress={() => null} type={['secondary', 'primary'][i]} />,)
+            ['Skip', 'Enable'].map((e: string, i: number) => <ButtonGen key={e + i} title={e} sizing={1} onPress={onPressHandler} type={['secondary', 'primary'][i]} />,)
         }
     </ButtonContainer>
     </Container>;

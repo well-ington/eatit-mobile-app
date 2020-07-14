@@ -10,22 +10,25 @@ const LoginContainer = styled.View`
     height: 100%;
 `;
 
-const StyledButton = styled.Button`
-
-`;
-
 const ButtonContainer = styled.View`
     position: absolute;
-    bottom: 10%;
-    width: 100%;
+    bottom: 0%;
+    padding: 8px;
+`;
+const SubContainer = styled.View`
+    flex-direction: row;
+    /* justify-content: space-; */
 `;
 
 export const LoginPrompt = () => {
     return <LoginContainer>
         <ButtonContainer>
-            <ButtonGen title={'Login'} onPress={() => Actions.drawerOpen()} type='primary' />
-            <ButtonGen title={'Register'} onPress={() => Actions.register()} type='secondary' />
-            <ButtonGen title={'Enter as a guest'} onPress={() => Actions.guest()} type='text' />
+            <ButtonGen sizing={2} title={'Login with Facebook'} color='blue' onPress={() => Actions.drawerOpen()} type='primary' />
+            <SubContainer>
+                <ButtonGen title={'Phone'} sizing={1} color='gray' onPress={() => Actions.phoneLogin()} type='secondary' />
+                <ButtonGen title={'E-mail'} sizing={1} color='gray' onPress={() => Actions.mailLogin()} type='secondary' />
+            </SubContainer>
+            <ButtonGen sizing={2} title={'Or continue as a guest'} color='gray' onPress={() => null} type='text' />
         </ButtonContainer>
     </LoginContainer>
 }

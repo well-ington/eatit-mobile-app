@@ -17,6 +17,8 @@ import UserEdit from './views/UserEdit';
 import LoginDrawer from './views/sub/LoginDrawer';
 import Geolocation from './views/Geolocation';
 import Notifications from './views/Notifications';
+import MailLogin from './views/MailLogin';
+import PhoneLogin from './views/PhoneLogin';
 
 // declare const global: {HermesInternal: null | {}};
 
@@ -34,6 +36,9 @@ const App: React.FC<IApp> = ({auth, places, user}) => {
                   <Stack key='root' hideNavBar>
                     <Scene key='enableGeo' component={Geolocation} />
                     <Scene key='enableNot' component={Notifications} />
+                    <Scene key='loginPrompt' component={LoginPrompt} />
+                    <Scene key='phoneLogin' component={PhoneLogin} />
+                    <Scene key='mailLogin' component={MailLogin} />
                       {/* <Scene drawer contentComponent={LoginDrawer}>
                         <Stack hideNavBar>
                           <Scene key='loginprompt' component={LoginPrompt} />

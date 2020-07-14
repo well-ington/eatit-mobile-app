@@ -29,13 +29,10 @@ const TextContainer = styled.View`
 const ImageContainer = styled.View`
     height: 100%;
     padding: 8px;
-    /* justify-content: center; */
-    /* background-color: blue; */
     border-right-width: 1px;
     border-right-color: #ddd;
     flex-direction: row;
     align-items: center;
-
 `;
 
 
