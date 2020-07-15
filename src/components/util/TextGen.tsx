@@ -146,6 +146,12 @@ const styles = StyleSheet.create({
     yellow: {
         color: 'hsl(45, 80%, 50%)'
     },
+    white: {
+        color: '#fefefe',
+        textShadowColor: '#333333aa',
+        textShadowOffset: {width: -1, height: 1},
+        textShadowRadius: 2
+    },
     bolded: {
         fontWeight: '800'
     }

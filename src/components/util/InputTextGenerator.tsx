@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 const StyledInput = styled.TextInput`
     width: 70%;
@@ -9,6 +10,8 @@ const StyledInput = styled.TextInput`
     z-index: 0;
     border-radius: 8px;
 `;
+
+const width = Dimensions.get('window').width;
 
 const Container = styled.View`
     margin: 8px;
@@ -30,20 +33,34 @@ const StyledLabel = styled.Text`
     /* text-transform: capitalize; */
 `;
 interface IInputTextGenerator {
-    type: string;
+    type?: string;
     onChange: (e: any) => void;
-    value: string;   
+    value: string;
+    maxLength?: number;
+    label?: boolean;
+    small?: boolean;
+    autoFocus?: boolean;
+    center?: boolean;
 }
 
-const InputTextGenerator: React.FC<IInputTextGenerator> = ({type, onChange, value}) => {
-    return <Container>
-            <LabelContainer>
+const InputTextGenerator: React.FC<IInputTextGenerator> = ({type, onChange, value, maxLength, label, small, autoFocus, center}) => {
+    return <>
+            {label && <LabelContainer>
                 <StyledLabel>
                     {type}
                 </StyledLabel>
-            </LabelContainer>
-            <StyledInput onChange={onChange} value={value} />            
-        </Container>
+            </LabelContainer>}
+            <StyledInput style={[small && styles.small, center && styles.centered]} {...{maxLength, autoFocus}} onChange={onChange} value={value} />            
+        </>
 }
+
+const styles = StyleSheet.create({
+    small: {
+        width: width * 0.15
+    },
+    centered: {
+        textAlign: 'center'
+    }
+});
 
 export default InputTextGenerator;

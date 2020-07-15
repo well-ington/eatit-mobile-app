@@ -58,7 +58,7 @@ const LoginForm: React.FC<ILoginForm> = ({type}) => {
         <HeaderContainer>
             <TextGen type='main'>Please type your { type === 'phone' ? 'Phone number' : 'E-mail' }</TextGen>
             <InputContainer>        
-            <InputTextGenerator type={type === 'phone' ? 'Phone number' : 'E-mail'} onChange={(event: any) => setInputValue(event.nativeEvent.text)} value={inputValue} />
+            <InputTextGenerator label type={type === 'phone' ? 'Phone number' : 'E-mail'} onChange={(event: any) => setInputValue(event.nativeEvent.text)} value={inputValue} />
             </InputContainer>
         </HeaderContainer>
         <ButtonContainer>
