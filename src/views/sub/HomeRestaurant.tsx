@@ -5,6 +5,7 @@ import ItemCard from '../../components/util/ItemCard';
 import { FlatList, TouchableHighlight, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Tstore } from 'src/store/reducer/main';
+import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Container = styled.ScrollView`
 
@@ -14,7 +15,7 @@ interface IHomeRestaurant {
     place: any;
 }
 const CategoryContainer = styled.View`
-    padding: 8px;
+    padding: 24px 16px;
 `;
 
 const SubCategoryContainer = styled.View`
@@ -28,18 +29,32 @@ const SideScrollView = styled.ScrollView`
     
 `;
 
+const SubIconView = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    width: 106px;
+`;
+
 const PaddingContainer = styled.View`
     padding: 42px 16px;
 `;
 
 const HeaderView = styled.View`
     height: 125px;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 16px;
     background-color: limegreen;
 `;
 
 const HomeRestaurant: React.FC<IHomeRestaurant> = ({place}) => {
     return <FlatList data={[
         <HeaderView>
+            <Icons name='chevron-left' size={48} color='white' />
+            <SubIconView>
+                <Icons name='share-outline' size={48} color='white' />
+                <Icons name='heart-outline' size={48} color='white' />
+            </SubIconView>
             
         </HeaderView>,
         <CategoryContainer>
@@ -48,7 +63,7 @@ const HomeRestaurant: React.FC<IHomeRestaurant> = ({place}) => {
             </TextGen>
             <SubCategoryContainer>
                 <TextGen type='sub'>
-                {place.categories[0]}
+                {place.categories[0]} * 0.0 km *
             </TextGen>
             <TextGen type='main' color='yellow'>
             ⭐{place.rating.toFixed(1)} ({~~(Math.random() * 200)})

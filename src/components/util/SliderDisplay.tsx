@@ -3,6 +3,7 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 import RestaurantCard from './RestaurantCard';
 import CategoryCard from './CategoryCard';
+import CardGen from './CardGen';
 
 const Container = styled.ScrollView`
     /* height: 200px; */
@@ -86,6 +87,13 @@ const SliderDisplay: React.FC<ISliderDisplay> = ({ type, info, vertical = false 
                     }
                 </CategoriesView>
             </>
+        case 'promo':
+            const promos = [...info];
+            return <Container horizontal={!vertical}>
+                {
+                    promos.map((name: string, index: number) => <CardGen type='promo' key={index + name} name={name} />)
+                }
+            </Container>
         default:
             return null;
     }
@@ -97,13 +105,9 @@ const styles = StyleSheet.create({
     },
     restaurantItem: {
         width: '100%',
-        // backgroundColor: 'blue'
     },
     categorySearch: {
-        // width: '100%',
-        // backgroundColor: 'blue',
         flexWrap: 'wrap',
-        // flexDirection: 'row'
     }
 });
 

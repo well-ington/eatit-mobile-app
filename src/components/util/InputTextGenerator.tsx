@@ -6,7 +6,7 @@ const StyledInput = styled.TextInput`
     width: 70%;
     background-color: #fefefe;
     border-width: 1px;
-    border-color: #222;
+    /* border-color: #222; */
     z-index: 0;
     border-radius: 8px;
 `;
@@ -41,16 +41,17 @@ interface IInputTextGenerator {
     small?: boolean;
     autoFocus?: boolean;
     center?: boolean;
+    error?: boolean;
 }
 
-const InputTextGenerator: React.FC<IInputTextGenerator> = ({type, onChange, value, maxLength, label, small, autoFocus, center}) => {
+const InputTextGenerator: React.FC<IInputTextGenerator> = ({error, type, onChange, value, maxLength, label, small, autoFocus, center}) => {
     return <>
             {label && <LabelContainer>
                 <StyledLabel>
                     {type}
                 </StyledLabel>
             </LabelContainer>}
-            <StyledInput style={[small && styles.small, center && styles.centered]} {...{maxLength, autoFocus}} onChange={onChange} value={value} />            
+            <StyledInput style={[small && styles.small, center && styles.centered, error && styles.error]} {...{maxLength, autoFocus}} onChange={onChange} value={value} />            
         </>
 }
 
@@ -60,6 +61,9 @@ const styles = StyleSheet.create({
     },
     centered: {
         textAlign: 'center'
+    },
+    error: {
+        borderColor: 'red'
     }
 });
 

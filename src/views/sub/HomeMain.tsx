@@ -1,14 +1,16 @@
 import React from 'react';
 
 import styled from 'styled-components/native';
-import { StyleSheet, TouchableHighlight, View, Text, FlatList } from 'react-native';
+import { StyleSheet, TouchableHighlight, View, Text, FlatList, ScrollView } from 'react-native';
 import SliderDisplay from '../../components/util/SliderDisplay';
 import TextGen from '../../components/util/TextGen';
 import RestaurantCard from '../../components/util/RestaurantCard';
 import { Actions } from 'react-native-router-flux';
 import { selectRestaurant } from '../../store/actions/main';
 import {connect} from 'react-redux';
-import { Tstore } from 'src/store/reducer/main';
+import { Tstore } from '../../store/reducer/main';
+import { ButtonGen } from '../../components/util/ButtonGen';
+import ButtonSlider from '../../components/util/ButtonSlider';
 
 const HomeContainer = styled.ScrollView`
 `;
@@ -36,15 +38,24 @@ const InputContainer = styled.View`
     box-shadow: 2px 2px 4px black;
 `;
 
-const FilterContainer = styled.View`
-    flex-direction: row;
-    justify-content: space-evenly;
+const FilterContainer = styled.ScrollView`
+    /* flex-direction: row; */
+    /* justify-content: space-evenly; */
+`;
+
+const TextContainer = styled.View`
+    padding: 32px 16px;
+`;
+
+const TouchableRestaurant = styled.TouchableHighlight`
+    padding: 8px 16px;
 `;
 
 interface IHomeMain {
     places: any;
     select: (e: number) => void;
 }
+
 
 
 const HomeMain: React.FC<IHomeMain> = ({places, select}) => {
@@ -72,20 +83,25 @@ const HomeMain: React.FC<IHomeMain> = ({places, select}) => {
     <View>
         <SliderDisplay type='categories' info={places.categories} />
     </View>,
-    <FilterContainer>
-    {
-    ['Rating','Delivery Fee'].map((e: string, i: number) => 
-    <TouchableHighlight key={e + 'filter'} onPress={ () => setFilter(i)}  >
-        <TextGen active={filterType === i ? 0 : -1} type='subselector'>{e}</TextGen>
-    </TouchableHighlight>)
-    }
-    </FilterContainer>,
-    <FlatList data={filtered} keyExtractor={(item, index) => index + 'virtualizedList'} renderItem={({item, index}) => <TouchableHighlight onPress={() => {
+    <View>
+        <SliderDisplay type='promo' info={['promo1','promo2']} />
+    </View>
+    ,
+    <TextContainer>
+    <TextGen type='title'>Places</TextGen>
+    </TextContainer>
+    ,
+    <ButtonSlider type='filter' 
+    titles={['Filters','Place type','Order By','Free Delivery','Food Ticket', 'Distance', 'Brand Delivery', 'Super Places']}
+    onPress={(i: number) => setFilter(i)}
+    active={filterType} />
+    ,
+    <FlatList data={filtered} keyExtractor={(item, index) => index + 'virtualizedList'} renderItem={({item, index}) => <TouchableRestaurant onPress={() => {
         Actions.drawerOpen();
         select(item.id);
         }}>
         <RestaurantCard place={item} />
-        </TouchableHighlight> } />
+        </TouchableRestaurant> } />
 ]} keyExtractor={(item, index) => index + 'parentFlatList'} renderItem={({item, index}) => <>{item}</>} />;
 }
 

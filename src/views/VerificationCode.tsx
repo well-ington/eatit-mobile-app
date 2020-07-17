@@ -13,7 +13,6 @@ import { doLogin } from '../store/actions/main';
 
 const Container = styled.View`
     height: 100%;
-    /* background-color: limegreen; */
     flex-direction: column;
     justify-content: space-between;
 `;
@@ -51,7 +50,7 @@ const VerificationCode: React.FC<IVerificationCode> = ({type, login}) => {
         type: 'none', message: ''
     });
     const [resendOpt, setResendOpt] = React.useState(false);
-    // const alertRef = React.useRef();
+
     const verif = codeBody.toString().replace(/,/g,'');
     if (verif.length === 5 && verif === '11111' && alertType.type !== 'error') {
         setAlertType({
@@ -82,7 +81,7 @@ const VerificationCode: React.FC<IVerificationCode> = ({type, login}) => {
             </TextGen>
             <InputContainer>
             {
-                codeBody.map((e: string, i: number) => <InputTextGenerator small maxLength={1} center key={`key_verification_${i}`} value={e} onChange={(event: any) => onChangeInput(event, i)} />)
+                codeBody.map((e: string, i: number) => <InputTextGenerator error={alertType.type === 'error'} small maxLength={1} center key={`key_verification_${i}`} value={e} onChange={(event: any) => onChangeInput(event, i)} />)
             }
             </InputContainer>        
         </TextContainer>

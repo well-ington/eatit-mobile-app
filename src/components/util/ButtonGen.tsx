@@ -25,14 +25,16 @@ interface IButtonGen {
     nopadding?: boolean;
 }
 
-const types = ['primary','secondary','text'];
+const types = ['primary','secondary','text', 'filter', 'filteractive'];
 
 export const defaultColors = {
     gray: 'dimgray',
     lightgray: 'silver',
     blue: 'steelblue',
     lightblue: 'royalblue',
-    red: 'crimson'
+    red: 'crimson',
+    brightgray: 'gainsboro',
+    lightred: 'peachpuff'
 }
 
 export const ButtonGen: React.FC<IButtonGen> = ({title, onPress, type, sizing, color = 'none', nopadding}) => {
@@ -43,7 +45,7 @@ export const ButtonGen: React.FC<IButtonGen> = ({title, onPress, type, sizing, c
         
         ]} onPress={onPress}>
         <StyledText style={[
-            ([styles.primary, styles.secondary, styles.text][colorIndex] || styles.primary),
+            ([styles.primary, styles.secondary, styles.text, styles.filter, styles.filteractive][colorIndex] || styles.primary),
             color !== 'none' && styles[`${type}${color}`]
         ]}>
             {title}
@@ -88,6 +90,18 @@ const styles = StyleSheet.create({
     },
     textblue: {
         color: defaultColors.blue,
+    },
+    filter: {
+        borderRadius: 50,
+        backgroundColor: defaultColors.brightgray,
+        borderColor: defaultColors.lightgray,
+        color: defaultColors.gray
+    },
+    filteractive: {
+        borderRadius: 50,
+        backgroundColor: defaultColors.lightred,
+        borderColor: defaultColors.red,
+        color: defaultColors.red
     },
     container: {
         padding: 8
