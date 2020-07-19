@@ -20,12 +20,12 @@ interface ITextGen {
     bold?: boolean;
 }
 
-const textTypes = ['title','sub','main','small', 'subselector', 'restname'];
+const textTypes = ['title','sub','main','small', 'subselector', 'restname', 'restsub'];
 
 const TextGen: React.FC<ITextGen> = (props) => {
     const indexOfType = textTypes.indexOf(props.type);
     return <TextGenerated style={[
-        [styles.title, styles.sub, styles.main, styles.small, styles.subSelector, styles.restName][indexOfType], 
+        [styles.title, styles.sub, styles.main, styles.small, styles.subSelector, styles.restName, styles.restSub][indexOfType], 
         props.center && styles.centered, 
         props.strike && styles.striked,
         props.style && props.style,
@@ -57,6 +57,10 @@ const styles = StyleSheet.create({
     restName: {
         fontSize: 32
         
+    },
+    restSub: {
+        fontSize: 24,
+        textTransform: 'capitalize'
     },
     subSelector: {
         fontSize: 22,

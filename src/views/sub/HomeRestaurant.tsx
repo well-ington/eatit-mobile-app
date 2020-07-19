@@ -29,6 +29,18 @@ const SideScrollView = styled.ScrollView`
     
 `;
 
+const HeaderButtonView = styled.View`
+    flex-direction: row;
+    padding: 8px 16px;
+    justify-content: space-between;
+`;
+
+const TouchableButton = styled.TouchableHighlight`
+    padding: 16px 32px;
+    border-color: gainsboro;
+    border-width: 2px;    
+`;
+
 const SubIconView = styled.View`
     flex-direction: row;
     justify-content: space-between;
@@ -47,7 +59,7 @@ const HeaderView = styled.View`
     background-color: limegreen;
 `;
 
-const HomeRestaurant: React.FC<IHomeRestaurant> = ({place}) => {
+const HomeRestaurant: React.FC<IHomeRestaurant> = ({ place }) => {
     return <FlatList data={[
         <HeaderView>
             <Icons name='chevron-left' size={48} color='white' />
@@ -55,43 +67,50 @@ const HomeRestaurant: React.FC<IHomeRestaurant> = ({place}) => {
                 <Icons name='share-outline' size={48} color='white' />
                 <Icons name='heart-outline' size={48} color='white' />
             </SubIconView>
-            
+
         </HeaderView>,
         <CategoryContainer>
             <TextGen type='restname'>
                 {place.name}
             </TextGen>
             <SubCategoryContainer>
-                <TextGen type='sub'>
-                {place.categories[0]} * 0.0 km *
-            </TextGen>
-            <TextGen type='main' color='yellow'>
-            ⭐{place.rating.toFixed(1)} ({~~(Math.random() * 200)})
+                <TextGen type='restsub'>
+                    {place.categories[0]} * 0.0 km *
+                </TextGen>
+                <TextGen type='main' color='yellow'>
+                    ⭐{place.rating.toFixed(1)} ({~~(Math.random() * 200)})
             </TextGen>
             </SubCategoryContainer>
         </CategoryContainer>,
-        <>
-         {
-            place.promo.length > 0 && <SideScrollView horizontal>
-                {
-                    place.promo.map((e: [number, number], index: number) => <ItemCard type='highlight' key={`${e[0]}_${Math.random() * 900}`} item={place.menu[e[0]].items[e[1]]} />)
-                }
-            </SideScrollView>
-        }
-        </>,
-         <FlatList data={place.menu} keyExtractor={(item, index) => `${index}_menu`}
-         renderItem={({item, index}) =><>
-         <PaddingContainer>
-            <TextGen type='title'>{item.section}</TextGen>
-            <TextGen type='sub'>{item.description}</TextGen>
-         </PaddingContainer>
+        <HeaderButtonView>
             {
-                item.items.map((e: any, index: number) => <ItemCard type='list-menu' image={index < 5} key={`${index}_${e}`} item={e} />)
+                ['Toggle', 'Schedule'].map((e: string, i: number) => <TouchableButton onPress={() => console.log('pressed')} key={e + i}>
+                    <TextGen center type='main'>{e}</TextGen>
+                    </TouchableButton>)
             }
+        </HeaderButtonView>,
+        <>
+            {
+                place.promo.length > 0 && <SideScrollView horizontal>
+                    {
+                        place.promo.map((e: [number, number], index: number) => <ItemCard type='highlight' key={`${e[0]}_${Math.random() * 900}`} item={place.menu[e[0]].items[e[1]]} />)
+                    }
+                </SideScrollView>
+            }
+        </>,
+        <FlatList data={place.menu} keyExtractor={(item, index) => `${index}_menu`}
+            renderItem={({ item, index }) => <>
+                <PaddingContainer>
+                    <TextGen type='title'>{item.section}</TextGen>
+                    <TextGen type='sub'>{item.description}</TextGen>
+                </PaddingContainer>
+                {
+                    item.items.map((e: any, index: number) => <ItemCard type='list-menu' image={index < 5} key={`${index}_${e}`} item={e} />)
+                }
             </>} />
-        ]} keyExtractor={(item, index) => `${index}_restaurant_child`}
-        renderItem={({item, index}) => <>
-        {item}
+    ]} keyExtractor={(item, index) => `${index}_restaurant_child`}
+        renderItem={({ item, index }) => <>
+            {item}
         </>} />;
 }
 
